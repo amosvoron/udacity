@@ -20,7 +20,7 @@ We'll analyse the data by setting up three questions/topics of interest:
 3. We want to predict the salary using the "moderate quantity" of variables that we'll find significant for the salary prediction. By the "moderate quantity" we mean any quantity that is substantially lower than the one from the Udacity lesson case where more than 1000 variables were used reaching the test R2 score about 0.7. Our goal will be to obtain similar result with less variables.
 ## File Descriptions
 - **Stackoverflow.ipynb**: Jupyter Notebook document with python code
-- **survey_result_public.csv**: data set (in CSV format)
+- **survey_result_public.zip**: data set (zipped containing the CSV file)
 - **survey_result_schema.csv**: data set's schema (in CSV format)
 - **schema.csv**: data set's schema with Section column
 - **so_survey_2019.pdf**: survey's questions
