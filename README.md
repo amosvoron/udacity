@@ -16,7 +16,7 @@ This project is the first project in the Udacity Data Science Nanodegree program
 
 The project methodology is CRISP-DM which stands for *cross-industry standard process for data mining*. Let me explain how the CRISP-DM steps were applied throughout the project:
 
-### 1. Business understanding
+### 1. Business Understanding
 "Stack Overflow is the largest, most trusted online community for developers to learn, share​ ​their programming ​knowledge, and build their careers." (https://stackoverflow.com). 
 
 I'm using 2019 survey result data to get some insights, quite different in their topics. I want to apply inferential statistics to reach conclusions about most popular technologies among developers. Then I want to explore if the formal education level has any influence over the developers decisions which non-formal education programs they choose. And, finally, I want to apply the machine learning using linear regression model to predict the salary by a limited number of features.      
@@ -45,7 +45,7 @@ I'm using 2019 survey result data to get some insights, quite different in their
 
 *Third question*: the regression model fitted to predict the salary with 0.7 R2 and substantially less than 1000 features.
 
-### 2. Data understanding
+### 2. Data Understanding
 
 The StackOverflow data set from the Developer Survey 2019 has 88883 rows and 85 columns. The columns represent the answers on survey questions grouped into the following sections:
 
@@ -104,7 +104,7 @@ In the third topic we'll simplify our work by excluding columns with non-scalar 
 - The boxplot visualization confirms that assumption. The threshold is 170.000 USD. We'll remove all data that exceeds it.  
 - The salary missing values reach 37%. Quite high, but being a label we opt for removing the missing label values. 
 
-### 3. Data preparation
+### 3. Data Preparation
 
 *First question*: 
 
@@ -171,7 +171,7 @@ YearsCode, YearsCodePro
 
 - We must improve the quality od the data in the columns **YearsCode** and **YearsCodePro** since not all values are numeric. There are two string values that we convert into a numeric value.
 
-#### 4. Modeling
+### 4. Modeling
 
 *Third question*:
 
@@ -209,7 +209,7 @@ If we take a quick look at the top predictors with the heighest coefficients, th
 
 The *Country* is the feature with the most impact on salary which can be easily understood due to the huge GDP differences between countries. *Part-time employment* has a negative impact on salary, one cannot gain the same salary if he or she works part-time or full-time. *High education level* increases the salary, also easy to understand. The *small companies* do not compensate the developers' work equally high as bigger companies do. Finally, performing *unit tests* and *reviewing code* is apparently also an influential factor that has a positive impact on salary.  
 
-#### 5. Evaluation
+### 5. Evaluation
 
 *First question*:
 
@@ -225,9 +225,10 @@ The goal of the third topic is also achieved: we reached 0.7 R2 with only 100 va
 
 Overall, we can be satisfied, *the project has met the initial business objectives*.
 
-#### 6. Deployment
+### 6. Deployment
 
 The code of this project can be found on my [GitHub](https://github.com/amosvoron/Udacity_StackOverflow). You can also check my [blog](https://medium.com/@amos.voron/stackoverflow-some-insigths-about-survey-2019-74dd85313e26).
+
 
 ## File Descriptions
 
@@ -240,3 +241,4 @@ The code of this project can be found on my [GitHub](https://github.com/amosvoro
 ## License
 
 MIT
+
