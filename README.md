@@ -9,7 +9,12 @@ $ git clone https://github.com/amosvoron/Udacity_StackOverflow
 This project is the first project in the Udacity Data Science Nanodegree program course. Being a software developer for more than 10 years I've chosen the StackOverflow data to analyse which appeared a logical choice to me.
 
 ## Methodology 
-The project methodology is CRISP-DM which stands for cross-industry standard process for data mining. Let me explain how the CRISP-DM steps were applied throughout the project:
+
+<div align="center">
+  <img src="crispdm.png">
+</div>
+
+The project methodology is CRISP-DM which stands for *cross-industry standard process for data mining*. Let me explain how the CRISP-DM steps were applied throughout the project:
 
 ### 1. Business understanding
 "Stack Overflow is the largest, most trusted online community for developers to learn, share​ ​their programming ​knowledge, and build their careers." (https://stackoverflow.com). 
@@ -150,7 +155,7 @@ In the third topic we'll simplify our work by excluding columns with non-scalar 
 - The total percentage of rows with at least one missing value is 16.37% distributed mostly over the column *UnitTests* with 8.79% and the column *Age* with 3.98% of missing values. I checked the option to create a separate category for missing values but it didn't produce any relevant outcome. I discarded the option to impute missing values (mean imputation) in order to avoid introducing bias. I also didn't opt for the option to use algorithms such as KNN, MICE, MissForest, or GANs due to a simple fact that the implementation of those algorithms exceeded my learning level and I didn't want to spend too much time with something that I was not sure that it would bring me some relevant results. 
 - Therefore, we remove the rows with the missing values.  
 
-####### Country
+Country
 
 - Since we’d like to predict with the *minimum number of variables* we find 159 countries too many. So we decide to limit the number of countries to 50. We will keep *top 50 countries* with **the highest frequency**.   
 
@@ -158,11 +163,11 @@ In the third topic we'll simplify our work by excluding columns with non-scalar 
 
 - Without any doubt, the salary depends on the country. You'll very likely not earn the same money as developer in Nigeria or in the United States.
 
-####### Student
+Student
 
 - We need to apply the data transformation over two categories: "Yes, full-time", "Yes, part-time". We only need the information if the developer is a student or not, so we convert the both categories into "Yes".
 
-####### YearsCode, YearsCodePro
+YearsCode, YearsCodePro
 
 - We must improve the quality od the data in the columns **YearsCode** and **YearsCodePro** since not all values are numeric. There are two string values that we convert into a numeric value.
 
