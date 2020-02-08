@@ -82,8 +82,8 @@ def build_model():
     
     Remark:
     This model is the winning model chosen among 4 models that were examinated 
-    in the ML pipeline preparation phase. 
-    (Please check the ML Pipeline Preparation.ipynb file for details.)
+    in the ML pipeline preparation phase. (Please check the ML Pipeline Preparation.ipynb 
+    file for details or the function build_model_CV below.)
     '''    
     model = Pipeline([
         ('vect', CountVectorizer(
@@ -103,6 +103,37 @@ def build_model():
     ])    
     
     return model
+
+
+def build_model_CV():  
+    '''
+    Builds the model using GridSearchCV for tuning the hyper parameters.
+    
+    Remark:
+    It is not recommended to execute GridSearchCV with all parameters in one single
+    step due to the performance issues. 
+    '''    
+    model = Pipeline([
+        ('vect', CountVectorizer(tokenizer=tokenize)),
+        ('tfidf', TfidfTransformer()),
+        ('clf', MultiOutputClassifier(RandomForestClassifier(random_state = 0)))
+    ])
+    
+    params = {
+        'clf__estimator__n_estimators': [50, 100, 250],    # best: 100
+        'clf__estimator__min_samples_leaf': [1, 2],        # best: 1 
+        'clf__estimator__min_samples_split': [2, 3, 5],    # best: 2 
+        'clf__estimator__criterion': ['entropy', 'gini'],  # best: gini
+        'clf__estimator__max_features': ['auto', 'log2'],  # best: auto 
+        'clf__estimator__bootstrap': [True, False],        # best: True
+        'vect__ngram_range': [(1,1), (1,2)],               # best: (1,2)
+        'vect__max_df': [1.0, 0.95],                       # best: 1.0
+        'vect__min_df': [1, 2]                             # best: 2
+    }
+
+    cv = GridSearchCV(model, param_grid=params, verbose=3, n_jobs=-1)
+    
+    return cv
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
