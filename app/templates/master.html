@@ -11,6 +11,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  	<style>
+      h1 { font-size: 2.5em !important; }
+      footer { height: 100px; }
+      .result-item { display: inline-block; padding: 5px 10px; border: 1px solid grey; margin-top: 4px;}
+    </style>
 </head>
 
 <body>
@@ -33,7 +38,7 @@
 <div class="jumbotron">
     <div class="container">
         <h1 class="text-center">Disaster Response Project</h1>
-        <p class="text-center">Analyzing message data for disaster response</p>
+        <p class="text-center"  style="font-size:1.1em" >Analyzing message data for disaster response</p>
         <hr />
       
         <div class="row">
@@ -41,6 +46,7 @@
                 <form action="/go" method="get">
                     <input type="text" class="form-control form-control-lg" name="query" placeholder="Enter a message to classify">
                     <div class="col-lg-offset-5">
+                      	<br />
                         <button type="submit" class="btn btn-lg btn-success">Classify Message</button>
                     </div>
                 </form>
@@ -63,6 +69,7 @@
         <div id="{{id}}"></div>
     {% endfor %}
 </div>
+<footer></footer>
 
 <script type="text/javascript">
     const graphs = {{graphJSON | safe}};

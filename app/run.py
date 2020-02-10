@@ -26,11 +26,11 @@ def tokenize(text):
     return clean_tokens
 
 # load data
-engine = create_engine('sqlite:///../data/YourDatabaseName.db')
-df = pd.read_sql_table('YourTableName', engine)
+engine = create_engine('sqlite:///../data/DisasterResponse.db')
+df = pd.read_sql_table('Message', engine)
 
 # load model
-model = joblib.load("../models/your_model_name.pkl")
+model = joblib.load("../models/classifier.pkl")
 
 
 # index webpage displays cool visuals and receives user input text for model
@@ -40,12 +40,17 @@ def index():
     
     # extract data needed for visuals
     # TODO: Below is an example - modify to extract data for your own visuals
+    # Graph 1 Data
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
+    # Graph 2 Data
+    category_names = df.iloc[:,4:].columns
+    category_sum = df.iloc[:,4:].sum().values
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
     graphs = [
+        # GRAPH 1 - genre graph  
         {
             'data': [
                 Bar(
@@ -63,9 +68,29 @@ def index():
                     'title': "Genre"
                 }
             }
-        }
+        },               
+        # GRAPH 2 - category graph    
+        {
+            'data': [
+                Bar(
+                    x=category_names,
+                    y=category_sum
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of Message Categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Category",
+                    'tickangle': 45
+                }
+            }
+        }        
     ]
-    
+           
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
