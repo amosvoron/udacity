@@ -15,6 +15,7 @@
       h1 { font-size: 2.5em !important; }
       footer { height: 100px; }
       .result-item { display: inline-block; padding: 5px 10px; border: 1px solid grey; margin-top: 4px;}
+      .graph { width: 75%; margin: 0 auto; }
     </style>
 </head>
 
@@ -69,14 +70,34 @@
         <div id="{{id}}"></div>
     {% endfor %}
 </div>
+<br />
+<div id="graph-3" class="graph"></div>
 <footer></footer>
 
-<script type="text/javascript">
+<script type="text/javascript"> 
     const graphs = {{graphJSON | safe}};
     const ids = {{ids | safe}};
-    for(let i in graphs) {
+  
+  	console.log(graphs);
+  
+    // for(let i in graphs) {
+  	for(let i=0; i < 2; i++) {
         Plotly.plot(ids[i], graphs[i].data, graphs[i].layout);
     }
+  
+  	// graph 3: Distribution of messages over categories
+	var trace = {
+    	x: graphs[2].data.x,
+    	type: 'histogram',
+  	};
+	var data = [trace];
+	var layout = {
+  		title: "Distribution of Messages over Categories",
+  		xaxis: { title: "Number of messages" },
+  		yaxis: { title: "Frequency" },
+	};  
+	Plotly.newPlot('graph-3', data, layout);
+
 </script>
 
 </body>

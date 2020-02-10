@@ -45,8 +45,8 @@ def index():
     genre_names = list(genre_counts.index)
     # Graph 2 Data
     category_names = df.iloc[:,4:].columns
-    category_sum = df.iloc[:,4:].sum().values
-    
+    category_sum = (df.iloc[:,4:] != 0).sum().values  
+
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
     graphs = [
@@ -58,7 +58,6 @@ def index():
                     y=genre_counts
                 )
             ],
-
             'layout': {
                 'title': 'Distribution of Message Genres',
                 'yaxis': {
@@ -77,7 +76,6 @@ def index():
                     y=category_sum
                 )
             ],
-
             'layout': {
                 'title': 'Distribution of Message Categories',
                 'yaxis': {
@@ -88,7 +86,13 @@ def index():
                     'tickangle': 45
                 }
             }
-        }        
+        }, 
+        # GRAPH 3 - data for histogram 
+        {
+            'data': {
+                'x': category_sum
+            }
+        } 
     ]
            
     # encode plotly graphs in JSON
