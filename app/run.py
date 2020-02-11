@@ -28,6 +28,7 @@ def tokenize(text):
 # load data
 engine = create_engine('sqlite:///../data/DisasterResponse.db')
 df = pd.read_sql_table('Message', engine)
+metrics = pd.read_sql_table('Metrics', engine)
 
 # load model
 model = joblib.load("../models/classifier.pkl")
@@ -38,69 +39,38 @@ model = joblib.load("../models/classifier.pkl")
 @app.route('/index')
 def index():
     
-    # extract data needed for visuals
-    # TODO: Below is an example - modify to extract data for your own visuals
-    # Graph 1 Data
+    # data 1: Count of message by genres
     genre_counts = df.groupby('genre').count()['message']
-    genre_names = list(genre_counts.index)
-    # Graph 2 Data
-    category_names = df.iloc[:,4:].columns
-    category_sum = (df.iloc[:,4:] != 0).sum().values  
+    data1 = {
+        'genre_names': list(genre_counts.index),
+        'genre_counts': df.groupby('genre').count()['message']
+    }
 
-    # create visuals
-    # TODO: Below is an example - modify to create your own visuals
-    graphs = [
-        # GRAPH 1 - genre graph  
-        {
-            'data': [
-                Bar(
-                    x=genre_names,
-                    y=genre_counts
-                )
-            ],
-            'layout': {
-                'title': 'Distribution of Message Genres',
-                'yaxis': {
-                    'title': "Count"
-                },
-                'xaxis': {
-                    'title': "Genre"
-                }
-            }
-        },               
-        # GRAPH 2 - category graph    
-        {
-            'data': [
-                Bar(
-                    x=category_names,
-                    y=category_sum
-                )
-            ],
-            'layout': {
-                'title': 'Distribution of Message Categories',
-                'yaxis': {
-                    'title': "Count"
-                },
-                'xaxis': {
-                    'title': "Category",
-                    'tickangle': 45
-                }
-            }
-        }, 
-        # GRAPH 3 - data for histogram 
-        {
-            'data': {
-                'x': category_sum
-            }
-        } 
-    ]
-           
-    # encode plotly graphs in JSON
-    ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
-    graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
+    # data 2: Count of messages by categories
+    data2 = {
+        'category_names': df.iloc[:,4:].columns,
+        'category_counts': (df.iloc[:,4:] != 0).sum().values  
+    }
+
+    # data 3: Count of messages by categories
+    data3 = {
+        'category_counts': (df.iloc[:,4:] != 0).sum().values  
+    }    
     
-    # render web page with plotly graphs
-    return render_template('master.html', ids=ids, graphJSON=graphJSON)
+    data = [data1, data2, data3]
+    data_type = 'general'
+           
+    # encode data in JSON
+    ids = ["graph-{}".format(i) for i, _ in enumerate(data)]
+    dataJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
+    
+    # render web page with data for plotly graphs
+    return render_template(
+        'master.html', 
+        data_type = data_type,
+        ids=ids, 
+        data=dataJSON,
+        classification_result=[])
 
 
 # web page that handles user query and displays model results
@@ -112,12 +82,28 @@ def go():
     # use model to predict classification for query
     classification_labels = model.predict([query])[0]
     classification_results = dict(zip(df.columns[4:], classification_labels))
-
+  
+    # data 1: metrics
+    data1 = {
+        'category_names': list(metrics['category']),
+        'accuracy': list(metrics['accuracy'])  
+    }       
+    
+    data = [data1]
+    data_type = 'classifier'
+    
+    # encode data in JSON
+    ids = ["graph-{}".format(i) for i, _ in enumerate(data)]
+    dataJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)  
+    
     # This will render the go.html Please see that file. 
     return render_template(
         'go.html',
         query=query,
-        classification_result=classification_results
+        classification_result=classification_results,
+        data_type = data_type,
+        ids=ids,
+        data=dataJSON
     )
 
 

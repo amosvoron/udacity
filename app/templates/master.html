@@ -16,6 +16,7 @@
       footer { height: 100px; }
       .result-item { display: inline-block; padding: 5px 10px; border: 1px solid grey; margin-top: 4px;}
       .graph { width: 75%; margin: 0 auto; }
+      .list-group-item-success { background-color: green; border: 1px solid green; color: white; }
     </style>
 </head>
 
@@ -48,7 +49,7 @@
                     <input type="text" class="form-control form-control-lg" name="query" placeholder="Enter a message to classify">
                     <div class="col-lg-offset-5">
                       	<br />
-                        <button type="submit" class="btn btn-lg btn-success">Classify Message</button>
+                        <button type="submit" class="btn btn-lg btn-primary">Classify Message</button>
                     </div>
                 </form>
             </div>
@@ -68,36 +69,85 @@
 
     {% for id in ids %}
         <div id="{{id}}"></div>
+  		<br />
     {% endfor %}
+
 </div>
 <br />
-<div id="graph-3" class="graph"></div>
 <footer></footer>
 
 <script type="text/javascript"> 
-    const graphs = {{graphJSON | safe}};
-    const ids = {{ids | safe}};
+ 
+    const data = {{data | safe}};  
+  	const data_type = '{{data_type | safe}}';
+  	const ids = {{ids | safe}};  
+  	const classification_result = {{classification_result | safe}};
   
-  	console.log(graphs);
+  	console.log(data_type);
+  	console.log(data);
+  	console.log(ids);
+  	console.log(classification_result);
   
-    // for(let i in graphs) {
-  	for(let i=0; i < 2; i++) {
-        Plotly.plot(ids[i], graphs[i].data, graphs[i].layout);
+  	if (data_type === 'general') {
+      
+  		// graph 1: Distribution of messages in genres
+		var trace1 = {
+    		x: data[0].genre_names,
+          	y: data[0].genre_counts,
+    		type: 'bar',
+  		};
+		var layout1 = {
+  			title: "Distribution of Messages in Genres",
+  			xaxis: { title: "Genre" },
+  			yaxis: { title: "Count" },
+		};  
+		Plotly.newPlot(ids[0], [trace1], layout1);      
+      
+  		// graph 2: Distribution of Messages in Categories
+		var trace2 = {
+    		x: data[1].category_names,
+          	y: data[1].category_counts,
+    		type: 'bar',
+  		};
+		var layout2 = {
+  			title: "Distribution of Messages in Categories",
+  			xaxis: { title: "Category", 'tickangle': 30 },
+  			yaxis: { title: "Count" },
+		};  
+		Plotly.newPlot(ids[1], [trace2], layout2);       
+      
+  		// graph 3: Distribution of messages over categories (histogram)
+		var trace3 = {
+    		x: data[2].category_counts,
+    		type: 'histogram',
+  		};
+		//var gdata = [trace];
+		var layout3 = {
+  			title: "Distribution of Messages over Categories (histogram)",
+  			xaxis: { title: "Number of messages" },
+  			yaxis: { title: "Frequency" },
+		};  
+		Plotly.newPlot(ids[2], [trace3], layout3);
+    }
+  	else {
+  		// graph 4: Metrics
+		var trace4 = {
+    		x: data[0].category_names,
+          	y: data[0].accuracy,
+          	marker: {},
+    		type: 'bar',
+  		};
+      	trace4.marker.color = trace4.x.map(function (v) {
+  			return classification_result[v] === 1 ? 'green' : 'lightgrey'
+		});
+		var layout4 = {
+  			title: "Metrics",
+  			xaxis: { title: "Category", 'tickangle': 30 },
+  			yaxis: { title: "Accuracy" },
+		};  
+		Plotly.newPlot(ids[0], [trace4], layout4); 
     }
   
-  	// graph 3: Distribution of messages over categories
-	var trace = {
-    	x: graphs[2].data.x,
-    	type: 'histogram',
-  	};
-	var data = [trace];
-	var layout = {
-  		title: "Distribution of Messages over Categories",
-  		xaxis: { title: "Number of messages" },
-  		yaxis: { title: "Frequency" },
-	};  
-	Plotly.newPlot('graph-3', data, layout);
-
 </script>
 
 </body>

@@ -62,18 +62,19 @@ def clean_data(df):
     return df
 
     
-def save_data(df, database_filename):
+def save_data(df, database_filename, table_name='Message'):
     '''
-    Stores the clean data into a SQLite database in the specified database file name.
+    Stores the clean data into a SQLite database.
     
     Input:
         df: DataFrame data to save
         database_filename: SQLite database name
+        table_name: messages data table name (optional)
     Output:
         None    
     '''
     engine = create_engine('sqlite:///' + database_filename)
-    df.to_sql('Message', engine, if_exists='replace', index=False)  
+    df.to_sql(table_name, engine, if_exists='replace', index=False)  
 
 
 def main():

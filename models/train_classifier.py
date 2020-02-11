@@ -30,12 +30,14 @@ from sklearn.model_selection import GridSearchCV
 import pickle
 
 
-def load_data(database_filepath, table_name='Message'):
+def load_data(database_filepath, table_name='Message', n_sample=0):
     '''
     Loads data from the SQLite database.
 
     Input:
         database_filepath: SQLite database name
+        table_name: messages data table name (optional)
+        n_sample: sample data size (optional) [USE FOR TESTING ONLY]
     Output:
         X: input vector of messages 
         y: output vector of categories (labels)
@@ -44,10 +46,9 @@ def load_data(database_filepath, table_name='Message'):
     engine = create_engine('sqlite:///' + database_filepath)
     df = pd.read_sql_table(table_name, engine)
     
-    # temp: REMOVE IN PRODUCTION
-    # ----------------------------------------------------
-    #df = df.sample(n=1000, axis=0, random_state=0)
-    # ----------------------------------------------------
+    # apply sampling
+    if (n_sample != 0):
+        df = df.sample(n=n_sample, axis=0, random_state=0)
     
     X = df['message'].values 
     y = df.drop(['id', 'message', 'original', 'genre'], axis=1)
@@ -143,6 +144,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
     ''' 
     Y_pred = model.predict(X_test)
     
+    metrics = []
     for i, col in enumerate(category_names): 
         print(f'Category: {col}')
         y_true = Y_test.iloc[:,i]
@@ -155,12 +157,35 @@ def evaluate_model(model, X_test, Y_test, category_names):
         print('--------------------------------------------------------')
         print()
         
+        # add metrics (accuracy only)
+        metrics.append(accuracy)
+        
     # total accuracy
     total_accuracy = (Y_pred == Y_test).mean().sum()/len(Y_test.columns)          
     print('Average accuracy: {:.4f}'.format(total_accuracy))
     print('--------------------------------------------------------')
 
+    return pd.DataFrame({
+        'category': category_names,
+        'accuracy': metrics
+    })
+    
 
+def save_metrics(metrics, database_filename, table_name='Metrics'):
+    '''
+    Stores the metrics data (accuracy only) into a SQLite database.
+    
+    Input:
+        database_filename: SQLite database name
+        metrics: metrics data
+        table_name: metrics data table name (optional)
+    Output:
+        None    
+    '''
+    engine = create_engine('sqlite:///' + database_filename)
+    metrics.to_sql(table_name, engine, if_exists='replace', index=False)    
+    
+    
 def save_model(model, model_filepath):
     '''
     Serializes model and saves it as a file.
@@ -170,14 +195,18 @@ def save_model(model, model_filepath):
         model_filepath: path of a model file
     '''
     with open(model_filepath, 'wb') as file:
-        pickle.dump(model, file)
-
-
+        pickle.dump(model, file)      
+        
+        
 def main():
     if len(sys.argv) == 3:
         database_filepath, model_filepath = sys.argv[1:]
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))
         X, Y, category_names = load_data(database_filepath)
+        
+        # FOR TESTING PURPOSES ONLY
+        # X, Y, category_names = load_data(database_filepath, table_name='Message', n_sample=1000)
+        
         X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
         
         print('Building model...')
@@ -187,7 +216,8 @@ def main():
         model.fit(X_train, Y_train)
         
         print('Evaluating model...')
-        evaluate_model(model, X_test, Y_test, category_names)
+        metrics = evaluate_model(model, X_test, Y_test, category_names)
+        save_metrics(metrics, database_filepath)
 
         print('Saving model...\n    MODEL: {}'.format(model_filepath))
         save_model(model, model_filepath)
