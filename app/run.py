@@ -34,6 +34,11 @@ metrics = pd.read_sql_table('Metrics', engine)
 model = joblib.load("../models/classifier.pkl")
 
 
+# Note that in the controllers (.index and .go methods) 
+# we will not prepare entire graphs, just data that will be passed
+# further to the View part of the code (master template) 
+# where the graphs will be finally created.
+
 # index webpage displays cool visuals and receives user input text for model
 @app.route('/')
 @app.route('/index')
@@ -52,12 +57,15 @@ def index():
         'category_counts': (df.iloc[:,4:] != 0).sum().values  
     }
 
-    # data 3: Count of messages by categories
+    # data 3: Count of messages by categories (for histogram)
     data3 = {
         'category_counts': (df.iloc[:,4:] != 0).sum().values  
     }    
     
     data = [data1, data2, data3]
+    
+    # set data_type as 'general' in order to distinguish it 
+    # from the 'classifier' data in the master template
     data_type = 'general'
            
     # encode data in JSON
@@ -76,6 +84,7 @@ def index():
 # web page that handles user query and displays model results
 @app.route('/go')
 def go():
+    
     # save user input in query
     query = request.args.get('query', '') 
 
@@ -90,6 +99,9 @@ def go():
     }       
     
     data = [data1]
+    
+    # set data_type as 'classifier' in order to distinguish it 
+    # from the 'general' data in the master template
     data_type = 'classifier'
     
     # encode data in JSON

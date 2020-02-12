@@ -46,7 +46,7 @@ def load_data(database_filepath, table_name='Message', n_sample=0):
     engine = create_engine('sqlite:///' + database_filepath)
     df = pd.read_sql_table(table_name, engine)
     
-    # apply sampling
+    # apply sampling [USE FOR TESTING ONLY]
     if (n_sample != 0):
         df = df.sample(n=n_sample, axis=0, random_state=0)
     
@@ -60,6 +60,11 @@ def load_data(database_filepath, table_name='Message', n_sample=0):
 def tokenize(text):
     '''
     Normalizes, lemmatizes, and tokenizes text.
+    
+    Input:
+        text: text to tokenize
+    Output:
+        words: array of tokens 
     '''
     # normalization
     text = re.sub(r'[^a-z0-9]', ' ', text.lower())
@@ -141,6 +146,14 @@ def evaluate_model(model, X_test, Y_test, category_names):
     '''
     Displays the results using accuracy, F1 score, precision and recall
     for each output category.
+    
+    Input:
+        model: ML model to evaluate
+        X_test: input X vector of test data
+        Y_test: output Y vector of test data
+        category_names: categories
+    Output:
+        Dataframe of metrics data
     ''' 
     Y_pred = model.predict(X_test)
     
@@ -176,8 +189,8 @@ def save_metrics(metrics, database_filename, table_name='Metrics'):
     Stores the metrics data (accuracy only) into a SQLite database.
     
     Input:
-        database_filename: SQLite database name
         metrics: metrics data
+        database_filename: SQLite database name
         table_name: metrics data table name (optional)
     Output:
         None    

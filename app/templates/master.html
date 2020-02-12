@@ -78,7 +78,7 @@
 
 <script type="text/javascript"> 
  
-    const data = {{data | safe}};  
+  	const data = {{data | safe}};  
   	const data_type = '{{data_type | safe}}';
   	const ids = {{ids | safe}};  
   	const classification_result = {{classification_result | safe}};
@@ -103,7 +103,7 @@
 		};  
 		Plotly.newPlot(ids[0], [trace1], layout1);      
       
-  		// graph 2: Distribution of Messages in Categories
+  		// graph 2: Distribution of messages in categories
 		var trace2 = {
     		x: data[1].category_names,
           	y: data[1].category_counts,
@@ -121,7 +121,6 @@
     		x: data[2].category_counts,
     		type: 'histogram',
   		};
-		//var gdata = [trace];
 		var layout3 = {
   			title: "Distribution of Messages over Categories (histogram)",
   			xaxis: { title: "Number of messages" },
