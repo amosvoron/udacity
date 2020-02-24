@@ -28,7 +28,7 @@ Lastly, we create a simple Flask website that reads the stored model and classif
 ## Installation
 ### Clone
 ```sh
-$ git clone https://github.com/amosvoron/Udacity_DisasterResponse
+$ git clone https://github.com/amosvoron/udacity-disaster-response.git
 ```
 
 ### Instructions:
