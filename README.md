@@ -1,4 +1,4 @@
-# Udacity_StackOverflow
+# Udacity StackOverflow Project
 This is a Data Science project for Udacity Nanodegree program based on the 2019 Stack Overflow's survey results. 
 ## Installation
 ### Clone
