@@ -50,7 +50,7 @@ It seems that the customers are mostly of higher age, they live in a multiperson
 ## Installation
 ### Clone
 ```sh
-$ git clone https://github.com/amosvoron/udacity-unsupervised-learning.git
+$ git clone https://github.com/amosvoron/learn-datascience-unsupervised-learning.git
 ```
 
 ## Repository Description
