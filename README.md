@@ -3,7 +3,7 @@ This is a Data Science project for Udacity Nanodegree program based on the 2019 
 ## Installation
 ### Clone
 ```sh
-$ git clone https://github.com/amosvoron/udacity-stackoverflow.git
+$ git clone https://github.com/amosvoron/learn-datascience-crispdm.git
 ```
 ## Project Motivation
 This project is the first project in the Udacity Data Science Nanodegree program course. Being a software developer for more than 10 years I've chosen the StackOverflow data to analyse which appeared a logical choice to me.
