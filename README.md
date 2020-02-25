@@ -4,7 +4,7 @@ This is a Data Science project for Udacity Nanodegree program to create a recomm
 ## Installation
 ### Clone
 ```sh
-$ git clone https://github.com/amosvoron/udacity-recommendations-ibm.git
+$ git clone https://github.com/amosvoron/learn-datascience-recommendations.git
 ```
 
 ## Repository Description
