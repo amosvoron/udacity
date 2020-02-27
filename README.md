@@ -38,7 +38,7 @@ A common practice is to predict top 5 or so (usually called top-*K*) most probab
 ## Installation
 ### Clone
 ```sh
-$ git clone https://github.com/amosvoron/learn-datascience-image-classifier.git
+$ git clone https://github.com/amosvoron/udacity-disaster-response-pipelines.git
 ```
 
 ## Repository Description
