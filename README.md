@@ -1,4 +1,4 @@
-# Disaster Response Pipeline Project
+# Disaster Response Pipelines Project
 This is a Data Science project for Udacity Nanodegree program that combines *Software Engineering* and *Data Engineering* tasks with an objective to create a model trained to classify disaster response messages accessible to the end user through the web application.
 
 ## Summary
@@ -28,7 +28,7 @@ Lastly, we create a simple Flask website that reads the stored model and classif
 ## Installation
 ### Clone
 ```sh
-$ git clone https://github.com/amosvoron/learn-datascience-pipelines.git
+$ git clone https://github.com/amosvoron/udacity-disaster-response-pipelines.git
 ```
 
 ### Instructions:
