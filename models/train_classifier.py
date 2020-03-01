@@ -117,7 +117,7 @@ def build_model_CV():
     
     Remark:
     It is not recommended to execute GridSearchCV with all parameters in one single
-    step due to the performance issues. 
+    step due to the performance issues.  
     '''    
     model = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
