@@ -104,7 +104,7 @@ def go():
     # from the 'general' data in the master template
     data_type = 'classifier'
     
-    # encode data in JSON
+    # encode data in JSON 
     ids = ["graph-{}".format(i) for i, _ in enumerate(data)]
     dataJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)  
     
