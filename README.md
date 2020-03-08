@@ -230,13 +230,20 @@ Overall, we can be satisfied, *the project has met the initial business objectiv
 The code of this project can be found on my [GitHub](https://github.com/amosvoron/Udacity_StackOverflow). You can also check my [blog](https://medium.com/@amos.voron/stackoverflow-some-insigths-about-survey-2019-74dd85313e26).
 
 
-## File Descriptions
+## Repository Description
 
-- **Stackoverflow.ipynb**: Jupyter Notebook document with python code
-- **survey_result_public.zip**: data set (zipped containing the CSV file)
-- **survey_result_schema.csv**: data set's schema (in CSV format)
-- **schema.csv**: data set's schema with Section column
-- **so_survey_2019.pdf**: survey's questions
+```sh
+- data
+| - schema.csv                      # data set's schema with Section column
+| - so_survey_2019.pdf              # main template of web app
+| - survey_result_public.zip        # data set (zipped containing the CSV file)
+| - survey_result_schema.csv        # data set's schema (in CSV format)
+
+- Stackoverflow.ipynb               # Jupyter Notebook file with python code
+- crispdm.png                       # CRISP-DM image for README.md
+- README.md                         # README file
+- LICENCE.md                        # LICENCE file
+```
 
 ## License
 
