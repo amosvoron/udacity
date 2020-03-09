@@ -1,4 +1,5 @@
 # Unsupervised Learning Project
+
 This is an unsupervised learning Data Science project for Udacity Nanodegree program to identify segments of the population that form the core customer base for Bertelsmann Arvato, a mail-order sales company from Germany. 
 
 ## Summary
