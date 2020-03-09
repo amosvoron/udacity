@@ -1,6 +1,5 @@
-<small align=right>STILL WORKING ON</small>
-
 # Recommendations With IBM Project
+
 This is a Data Science project for Udacity Nanodegree program to create a recommendation engine with real data from the IBM Watson Studio platform.
 
 ## Installation
